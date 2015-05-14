@@ -1,0 +1,4 @@
+services:
+#    den_user.example:
+#        class: Den\UserBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

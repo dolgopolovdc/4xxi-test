@@ -1,0 +1,46 @@
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        
+    providers:
+        in_memory:
+            memory:
+                users:
+                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN', 'ROLE_USER' ] }
+                    
+        _hwi_provider:
+            id: den.aouth_user_provider
+
+    firewalls:
+        secured_area:
+        
+            form_login:
+                check_path: _security_check
+                login_path: _login
+                
+            oauth:
+                resource_owners:
+                    facebook:           "/login/check-facebook"
+                login_path:        _login
+                failure_path:      _login
+                default_target_path: den_chat_homepage
+
+                oauth_user_provider:
+                    service: den.aouth_user_provider
+            
+            logout:
+                path:               _logout
+                target:             den_chat_homepage
+                invalidate_session: true
+                delete_cookies:
+                    name:
+                        path:                 null
+                        domain:               null
+            anonymous:              true
+        
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connect, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, role: ROLE_USER }

@@ -1,0 +1,22 @@
+                            <form id="message-form" action="{{ path("message_edit_ajax") }}" method="post">
+                                <div class="form-group">
+                                    {{ form_widget(form.message, { 'attr': {'id': 'btn-input', 'class': 'form-control', 'row': '3', 'placeholder': 'Введите сообщение'} }) }}
+                                    
+                                </div>
+                                <span class="form-group text-right">
+                                        {{ form_rest(form) }}
+                                        <input id="" type="submit" value="Редактировать" class="submit btn btn-warning btn-sm text-right"  />
+                                </span>
+                            </form>
+                            
+                            <script>
+                                $(document).ready(function() {
+                                	$('.submit').on( 'click', function () { 
+
+                                    	$.post('{{ path("message_edit_ajax") }}', $( "#message-form" ).serialize(), function(data) {
+                                    		$('#message-{{ id }}').html(data);
+                                    	}); 
+                                		return false;
+                                    });
+                                });
+                            </script>

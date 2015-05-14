@@ -1,0 +1,14 @@
+den_chat:
+    resource: "@DenChatBundle/Resources/config/routing.yml"
+    prefix:   /
+
+den_user:
+    resource: "@DenUserBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+    
+facebook_login:
+    pattern: /login/check-facebook
