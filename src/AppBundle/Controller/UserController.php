@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * Class User Controller
@@ -13,6 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserController extends Controller
 {
+    /**
+     * User profile page
+     * 
+     * @Route("/profile", name="user_profile")
+     * @param Request $request
+     */
     public function profileAction(Request $request)
     {
         $user = $this->get('security.context')->getToken()->getUser();

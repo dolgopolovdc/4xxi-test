@@ -5,11 +5,13 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Message;
 
 /**
  * Class Chat controller
  * 
+ * @Route("/")
  * @author Denis Dolgopolov <dolgopolovdc@gmail.com>
  *
  */
@@ -17,6 +19,8 @@ class ChatController extends Controller
 {
     /**
      * Chat page
+     * 
+     * @Route("/", name="chat_homepage")
      */
     public function indexAction()
     {
@@ -37,6 +41,8 @@ class ChatController extends Controller
     
     /**
      * New message
+     * 
+     * @Route("/message_new", name="message_new")
      */
     public function newAction()
     {
@@ -70,6 +76,7 @@ class ChatController extends Controller
     /**
      * Form message
      * 
+     * @Route("/message_form", name="message_form")
      * @param Request $request
      */
     public function formAction(Request $request)
@@ -94,6 +101,7 @@ class ChatController extends Controller
     /**
      * Ajax edit message
      * 
+     * @Route("/message_edit", name="message_edit_ajax")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
