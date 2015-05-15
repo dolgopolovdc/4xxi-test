@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -16,7 +15,6 @@ class SecuredController extends Controller
 {
     /**
      * @Route("/login", name="_login")
-     * @Template()
      */
     public function loginAction(Request $request)
     {
@@ -26,10 +24,10 @@ class SecuredController extends Controller
             $error = $request->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return array(
+        return $this->render('AppBundle:Secured:login.html.twig', array(
             'last_username' => $request->getSession()->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-        );
+        ));
     }
 
     /**
