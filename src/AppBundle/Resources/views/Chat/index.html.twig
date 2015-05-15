@@ -70,16 +70,14 @@
                         </div>
                         <!-- /.panel-body -->
                         <div class="panel-footer">
-                            <form action="{{ path("message_new") }}" method="post">
-                                <div class="input-group">
+                            <form action="{{ path("chat_homepage") }}" method="post">
+                                <div class="form-group">
                                     {{ form_widget(form.message, { 'attr': {'id': 'btn-input', 'class': 'form-control input-sm', 'placeholder': 'Введите сообщение'} }) }}
-                                    <span class="input-group-btn">
-                                        {{ form_rest(form) }}
-                                        <button class="btn btn-warning btn-sm" id="btn-chat">
-                                            Отправить
-                                        </button>
-                                    </span>
                                 </div>
+                                <span class="form-group text-right">
+                                        {{ form_rest(form) }}
+                                        <input id="" type="submit" value="Отправить" class="btn btn-warning btn-sm text-right"  />
+                                </span>
                            </form>
                         </div>
                         <!-- /.panel-footer -->
@@ -102,12 +100,12 @@
     		messageId = $( this).data( "message-id" );
 
     		$.ajax({
-    			  method: "POST",
-    			  url: "{{ path("message_form") }}",
-    			  data: { id: messageId}
+    			  method: "GET",
+    			  url: "{{ path("chat_homepage") }}message_form/" + messageId,
+    			  /*data: { 'id': messageId}*/
     			})
     			  .done(function( form ) {
-    				  $('#message-'+messageId).html(form);
+    				  $('#message-' + messageId).html(form);
     			  });
 
     		return false;

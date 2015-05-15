@@ -1,4 +1,4 @@
-                            <form id="message-form" action="{{ path("message_edit_ajax") }}" method="post">
+                            <form id="message-form" action="{{ path("message_edit_ajax", {"id": message.id}) }}" method="post">
                                 <div class="form-group">
                                     {{ form_widget(form.message, { 'attr': {'id': 'btn-input', 'class': 'form-control', 'row': '3', 'placeholder': 'Введите сообщение'} }) }}
                                     
@@ -13,8 +13,8 @@
                                 $(document).ready(function() {
                                 	$('.submit').on( 'click', function () { 
 
-                                    	$.post('{{ path("message_edit_ajax") }}', $( "#message-form" ).serialize(), function(data) {
-                                    		$('#message-{{ id }}').html(data);
+                                    	$.post('{{ path("message_edit_ajax", {"id": message.id}) }}', $( "#message-form" ).serialize(), function(data) {
+                                    		$('#message-{{ message.id }}').html(data);
                                     	}); 
                                 		return false;
                                     });

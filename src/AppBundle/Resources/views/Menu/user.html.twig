@@ -5,7 +5,15 @@
             </a>
             <ul class="dropdown-menu dropdown-user">
                <li>
-                    <a href="{{ path('user_profile') }}"><i class="fa fa-user fa-fw"></i> Профиль {{ app.user.username }}</a>
+                    <a href="{{ path('user_profile') }}">
+                        <i class="fa fa-user fa-fw"></i>
+                        Профиль 
+                        {% if app.user.realname is defined %}
+                            {{ app.user.realname }}
+                        {% else %}
+                            {{ app.user.username }}
+                        {% endif %}
+                    </a>
                </li>
                <li class="divider"></li>
                 <li>

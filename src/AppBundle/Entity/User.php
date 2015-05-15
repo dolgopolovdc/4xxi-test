@@ -6,67 +6,132 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  *
- * @ORM\Table(name="users")
  * @ORM\Entity
+ * @ORM\Table(name="users")
  */
 class User implements UserInterface//, \Serializable
 {
     /**
-     * @ORM\Column(type="integer")
+     * @var integer $id
+     * 
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(
+     *      name="id",
+     *      type="integer"
+     * )
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @var string
+     * 
+     * @ORM\Column(
+     *      name="username",
+     *      type="string",
+     *      length=25,
+     *      unique=true
+     * )
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=25, nullable=true)
+     * @var string
+     * 
+     * @ORM\Column(
+     *      name="resource_username",
+     *      type="string",
+     *      length=25,
+     *      nullable=true
+     * )
      */
     private $resourceUsername;
 
     /**
-     * @ORM\Column(type="string", length=25, nullable=true)
+     * @var string
+     * 
+     * @ORM\Column(
+     *      name="realname",
+     *      type="string",
+     *      length=25,
+     *      nullable=true
+     * )
      */
     private $realname;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @var string
+     * 
+     * @ORM\Column(
+     *      name="password",
+     *      type="string",
+     *      length=64,
+     *      nullable=true
+     * )
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=true)
+     * @ORM\Column(
+     *      name="email",
+     *      type="string",
+     *      length=100,
+     *      unique=true
+     * )
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=false)
+     * @var string
+     * 
+     * @ORM\Column(
+     *      name="salt",
+     *      type="string",
+     *      length=100,
+     *      unique=false
+     *  )
      */
     private $salt;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @var boolean
+     * 
+     * @ORM\Column(
+     *      name="$is_active",
+     *      name="is_active",
+     *      type="boolean"
+     * )
      */
     private $isActive;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string
+     * 
+     * @ORM\Column(
+     *      name="resource",
+     *      type="string",
+     *      length=100
+     * )
      */
     private $resource;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var datetime
+     * 
+     * @ORM\Column(
+     *      name="last_login",
+     *      type="datetime"
+     * )
      */
     private $lastLogin;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="user")
+     * @ORM\OneToMany(
+     *      targetEntity="AppBundle\Entity\Message",
+     *      mappedBy="user"
+     * )
      * @ORM\OrderBy({"created"="DESC"})
      */
     private $messages;

@@ -7,7 +7,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Редактирование профиля {{ name }}</h1>
+                <h1 class="page-header">
+                    Редактирование профиля
+                    {% if app.user.realname is defined %}
+                        {{ app.user.realname }}
+                    {% else %}
+                        {{ app.user.username }}
+                    {% endif %}
+                </h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -15,6 +22,7 @@
     </div>
     <!-- /.container-fluid -->
     
+{% if form %}
     <div class="row">
         <div class="col-lg-6">
             <div class="panel panel-default">
@@ -33,12 +41,29 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-xs-6 col-sm-2">
-                                            {{ form_label(form.username, 'Имя:') }}
+                                            {{ form_label(form.realname, 'ФИО:') }}
                                         </div>
                                         <div class="col-xs-6 col-sm-4">
-                                            {{ form_errors(form.username) }}
+                                            {{ form_errors(form.realname) }}
                                             <div class="form-group input-group">
-                                                {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'Введите имя'} }) }}
+                                                {{ form_widget(form.realname, { 'attr': {'class': 'form-control', 'placeholder': 'Введите имя'} }) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.form-group -->
+                                
+                                
+                                
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-2">
+                                            {{ form_label(form.email, 'Email:') }}
+                                        </div>
+                                        <div class="col-xs-6 col-sm-4">
+                                            {{ form_errors(form.email) }}
+                                            <div class="form-group input-group">
+                                                {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'email@mail.ru'} }) }}
                                             </div>
                                         </div>
                                     </div>
@@ -70,6 +95,7 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+{%  endif %}
 
 
 {% endblock %}

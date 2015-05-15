@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Form\UserType;
 
 /**
  * Class User Controller
@@ -23,27 +24,27 @@ class UserController extends Controller
     public function profileAction(Request $request)
     {
         $user = $this->get('security.context')->getToken()->getUser();
-        $name = $user->getUsername();
         
-        $em = $this->get('doctrine')->getEntityManager();
-        $user = $em->getRepository('AppBundle:User')->find($user->getId());
+        if($user instanceof \AppBundle\Entity\User) {
         
-        $form = $this->get('form.factory')
-        ->createBuilder('form', $user)
-        ->add('username')
-        ->add('id', 'hidden')
-        ->getForm();
-        
-        $form->handleRequest($request);
-        
-        if ($form->isValid()) {
-            $em->persist($user);
-            $em->flush();
+            $form = $this->createForm(new UserType(), $user);
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+            }
+            
+            return $this->render('AppBundle:User:profile.html.twig', array(
+                'form' => $form->createView()
+            ));
         }
-        
-        return $this->render('AppBundle:User:profile.html.twig', array(
-            'name' => $name,
-            'form' => $form->createView()
-        ));
+        else
+        {
+            return $this->render('AppBundle:User:profile.html.twig', array(
+                'form' => false
+            ));
+        }
     }
 }

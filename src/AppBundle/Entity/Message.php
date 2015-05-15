@@ -15,15 +15,21 @@ class Message
      * @var integer $id
      *
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(
+     *      name="id",
+     *      type="integer"
+     * )
      */
     private $id;
     
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="messages")
+     * @ORM\ManyToOne(
+     *      targetEntity="AppBundle\Entity\User",
+     *      inversedBy="messages"
+     * )
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $user;
@@ -32,18 +38,28 @@ class Message
     /**
      * @var string
      *
-     * @ORM\Column(name="message", type="string", length=255)
+     * @ORM\Column(
+     *      name="message",
+     *      type="string",
+     *      length=255
+     * )
      */
     private $message;
     
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(
+     *      name="created",
+     *      type="datetime"
+     * )
      */
     protected $created;
     
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(
+     *      name="updated",
+     *      type="datetime"
+     * )
      */
     protected $updated;
 
@@ -55,6 +71,19 @@ class Message
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set id
+     *
+     * @param integer
+     * @return Message
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    
+        return $this;
     }
 
     /**

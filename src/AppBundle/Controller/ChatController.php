@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Message;
+use AppBundle\Form\MessageType;
 
 /**
  * Class Chat controller
@@ -21,17 +22,29 @@ class ChatController extends Controller
      * Chat page
      * 
      * @Route("/", name="chat_homepage")
+     * @param Request $request
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->get('doctrine')->getEntityManager();
-        $messages = $em->getRepository('AppBundle:Message')->findAll();
         
         $message = new Message();
-        $form = $this->get('form.factory')
-        ->createBuilder('form', $message)
-        ->add('message', 'text')
-        ->getForm();
+        $form = $this->createForm(new MessageType(), $message);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message->setUser($user);
+            $message->setCreated(new \DateTime());
+            $message->setUpdated($message->getCreated());
+            
+            $em->persist($message);
+            $em->flush();
+            
+            return $this->redirect($this->generateUrl('chat_homepage'));
+        }
+
+        $messages = $em->getRepository('AppBundle:Message')->findAll();
         
         return $this->render('AppBundle:Chat:index.html.twig', array(
             'messages' => $messages,
@@ -40,92 +53,35 @@ class ChatController extends Controller
     }
     
     /**
-     * New message
-     * 
-     * @Route("/message_new", name="message_new")
-     */
-    public function newAction()
-    {
-    	$message = new Message();
-    	$user = $this->get('security.context')->getToken()->getUser();
-    	
-        $message->setUser($user);
-        $message->setCreated(new \DateTime());
-        $message->setUpdated($message->getCreated());
-        
-        
-    	$form = $this->get('form.factory')
-        	->createBuilder('form', $message)
-        	->add('message', 'text')
-    	    ->getForm();
-    	$request = $this->get('request');
-    	if ($request->getMethod() == 'POST') {
-    		$form->bind($request);
-    		if ($form->isValid()) {
-    			$em = $this->get('doctrine')->getEntityManager();
-    			$em->persist($message);
-    			$em->flush();
-    			return $this->redirect($this->generateUrl('chat_homepage'));
-    		}
-    	}
-    	return $this->render('AppBundle:Chat::index.html.twig', array(
-    	        'form' => $form->createView()
-    	));
-    }
-    
-    /**
      * Form message
      * 
-     * @Route("/message_form", name="message_form")
+     * @Route("/message_form/{id}", name="message_form")
      * @param Request $request
      */
-    public function formAction(Request $request)
+    public function formAction(Message $message)
     {
-        $id = $request->request->get('id');
-        
-        $em = $this->get('doctrine')->getEntityManager();
-        $message = $em->getRepository('AppBundle:Message')->find($id);
-        
-        $form = $this->get('form.factory')
-            ->createBuilder('form', $message)
-            ->add('message', 'textarea')
-            ->add('id', 'hidden')
-            ->getForm();
+        $form = $this->createForm(new MessageType(), $message);
         
         return $this->render('AppBundle:Chat:form.html.twig', array(
             'form' => $form->createView(),
-            'id' => $id
+            'message' => $message
         ));
     }
     
     /**
      * Ajax edit message
      * 
-     * @Route("/message_edit", name="message_edit_ajax")
+     * @Route("/message_edit/{id}", name="message_edit_ajax")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function editAjaxAction(Request $request)
+    public function editAjaxAction(Request $request, Message $message)
     {
-        $message = new Message();
-        $requestForm = $request->request->get('form');
-        
-        $em = $this->get('doctrine')->getEntityManager();
-        $message = $em->getRepository('AppBundle:Message')->find($requestForm['id']);
-        
-        if (!$message) {
-            throw $this->createNotFoundException('Unable to find Message entity.');
-        }
-        
-        $form = $this->get('form.factory')
-            ->createBuilder('form', $message)
-            ->add('message')
-            ->add('id')
-            ->getForm();
-        
+        $form = $this->createForm(new MessageType(), $message);
         $form->handleRequest($request);
         
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->get('doctrine')->getEntityManager();
             $em->persist($message);
             $em->flush();
         }
