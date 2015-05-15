@@ -41,9 +41,7 @@ class UserController extends Controller
             return $this->render('AppBundle:User:profile.html.twig', array(
                 'form' => $form->createView()
             ));
-        }
-        else
-        {
+        } else {
             return $this->render('AppBundle:User:profile.html.twig', array(
                 'form' => false
             ));

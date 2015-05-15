@@ -31,13 +31,15 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
      */
     protected $repository;
 
-    public function __construct(ManagerRegistry $registry, $className) {
+    public function __construct(ManagerRegistry $registry, $className)
+    {
         $this->em = $registry->getManager();
         $this->repository = $this->em->getRepository($className);
         $this->className = $className;
     }
 
-    public function loadUserByOAuthUserResponse(UserResponseInterface $response) {
+    public function loadUserByOAuthUserResponse(UserResponseInterface $response)
+    {
         $username = $response->getUsername();
         $nickname = $response->getNickname();
         $realname = $response->getRealName();
@@ -65,7 +67,8 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
         return $user;
     }
 
-    public function loadUserByUsername($username) {
+    public function loadUserByUsername($username)
+    {
 
         $user = $this->repository->findOneBy(array('username' => $username));
         if (!$user) {
@@ -75,7 +78,8 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
         return $user;
     }
 
-    public function refreshUser(UserInterface $user) {
+    public function refreshUser(UserInterface $user)
+    {
         return $this->loadUserByUsername($user->getUsername());
     }
 
