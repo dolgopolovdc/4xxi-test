@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Form\UserType;
 
 /**
@@ -19,6 +20,7 @@ class UserController extends Controller
      * User profile page
      * 
      * @Route("/profile", name="user_profile")
+     * @Security("has_role('ROLE_USER')")
      * @param Request $request
      */
     public function profileAction(Request $request)

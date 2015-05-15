@@ -5,5 +5,5 @@ parameters:
     
 services:
     app.aouth_user_provider:
-        class: AppBundle\Entity\OAuthUserProvider
+        class: AppBundle\Security\Authentication\Provider\OAuthUserProvider
         arguments: ["@doctrine", "%user_class_name%"]

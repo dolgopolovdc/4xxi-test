@@ -80,5 +80,4 @@ hwi_oauth:
             type:                facebook
             client_id:           435987026543444
             client_secret:       fb713085ef4e87d968bc1489fd8fd6fb
-            scope:         "email,user_friends"
-            #infos_url: "https://graph.facebook.com/me?fields=name,email,picture.type(square)"          
+            scope:         "email,user_friends"         

@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Entity;
+namespace AppBundle\Security\Authentication\Provider;
 
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;

@@ -1,6 +1,7 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
+        AppBundle\Entity\User: bcrypt
         
     providers:
         in_memory:
@@ -14,7 +15,8 @@ security:
 
     firewalls:
         secured_area:
-        
+            pattern: ^/
+            anonymous: true
             form_login:
                 check_path: _security_check
                 login_path: _login
@@ -25,7 +27,6 @@ security:
                 login_path:        _login
                 failure_path:      _login
                 default_target_path: chat_homepage
-
                 oauth_user_provider:
                     service: app.aouth_user_provider
             
@@ -37,7 +38,6 @@ security:
                     name:
                         path:                 null
                         domain:               null
-            anonymous:              true
         
 
     access_control:

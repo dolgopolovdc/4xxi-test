@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Message;
 use AppBundle\Form\MessageType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Class Chat controller
@@ -56,6 +57,7 @@ class ChatController extends Controller
      * Form message
      * 
      * @Route("/message_form/{id}", name="message_form")
+     * @Security("user == message.getUser()")
      * @param Request $request
      */
     public function formAction(Message $message)
@@ -72,6 +74,7 @@ class ChatController extends Controller
      * Ajax edit message
      * 
      * @Route("/message_edit/{id}", name="message_edit_ajax")
+     * @Security("user == message.getUser()")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
