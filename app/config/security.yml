@@ -10,7 +10,7 @@ security:
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN', 'ROLE_USER' ] }
                     
         _hwi_provider:
-            id: den.aouth_user_provider
+            id: app.aouth_user_provider
 
     firewalls:
         secured_area:
@@ -24,14 +24,14 @@ security:
                     facebook:           "/login/check-facebook"
                 login_path:        _login
                 failure_path:      _login
-                default_target_path: den_chat_homepage
+                default_target_path: chat_homepage
 
                 oauth_user_provider:
-                    service: den.aouth_user_provider
+                    service: app.aouth_user_provider
             
             logout:
                 path:               _logout
-                target:             den_chat_homepage
+                target:             chat_homepage
                 invalidate_session: true
                 delete_cookies:
                     name:

@@ -1,9 +1,10 @@
-den_chat:
-    resource: "@DenChatBundle/Resources/config/routing.yml"
+app_ann:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
     prefix:   /
-
-den_user:
-    resource: "@DenUserBundle/Resources/config/routing.yml"
+    
+app:
+    resource: "@AppBundle/Resources/config/routing.yml"
     prefix:   /
     
 hwi_oauth_redirect:

@@ -17,8 +17,9 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-            new Den\UserBundle\DenUserBundle(),
-            new Den\ChatBundle\DenChatBundle(),
+//            new Den\UserBundle\DenUserBundle(),
+//            new Den\ChatBundle\DenChatBundle(),
+            new AppBundle\AppBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

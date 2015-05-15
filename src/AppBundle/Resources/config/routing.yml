@@ -1,0 +1,24 @@
+chat_homepage:
+    path:     /
+    defaults: { _controller: AppBundle:Chat:index }
+    
+message_new:
+    path:     /message_new
+    defaults: { _controller: AppBundle:Chat:new }
+    
+message_form:
+    path:     /message_form
+    defaults: { _controller: AppBundle:Chat:form }
+
+message_edit_ajax:
+    path:     /message_edit
+    defaults: { _controller: AppBundle:Chat:editAjax }
+    
+user_profile:
+    path:     /profile
+    defaults: { _controller: AppBundle:User:profile }
+    
+secured:
+    resource: "@AppBundle/Controller/SecuredController.php"
+    type:     annotation
+    

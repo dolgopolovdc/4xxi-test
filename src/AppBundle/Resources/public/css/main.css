@@ -1,0 +1,14 @@
+.phone-in-hand {
+    background: url("../images/phone.png") no-repeat;
+    width: 100%;
+    height: 391px;
+    min-width: 185px;
+    padding-top: 130px;
+    padding-left: 89px;
+}
+
+.round-ok {
+    background: url("../images/ok.png") no-repeat;
+    width: 100%;
+    height: 110px;
+}

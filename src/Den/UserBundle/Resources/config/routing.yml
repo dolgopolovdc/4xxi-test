@@ -1,7 +1,0 @@
-den_user_profile:
-    path:     /profile
-    defaults: { _controller: DenUserBundle:User:profile }
-    
-den_secured:
-    resource: "@DenUserBundle/Controller/SecuredController.php"
-    type:     annotation
